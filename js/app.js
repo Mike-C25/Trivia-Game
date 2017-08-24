@@ -1,4 +1,5 @@
 $(document).ready(function() {
+    var timer = $("#timer");
     var answerBlock = $(".card-container");
     var answerDiv = $("div.answer");
     var question = $("#question");
@@ -10,19 +11,59 @@ $(document).ready(function() {
     var bankSize = bank.length;
     var correct = 0;
     var incorrect = 0;
-    // console.log(question);
+    var count = 8;
+    var counter = null;
+    var answer = "";
 
 
     function initGame() {
-    	correct = 0;
-    	incorrect = 0;
+        count = 8;
+        correct = 0;
+        incorrect = 0;
         var score = 0;
-        var answer = "";
+        answer = "";
         isRunning = true;
-
-        //Random Question Selector
-
     }
+
+    function tick() {
+        count = count - 1;
+        if (count <= 0) {
+            clearInterval(counter);
+            //counter is zero, mark answer wrong, go to next question
+            timer.text("Time's Up!");
+            valid = false;
+            checkAnswer("no answer");
+            while (!valid) {
+                console.log(valid);
+                valid = drawBank();
+            }
+            return;
+        }
+        //show countdown
+        timer.text(count);
+    }
+
+    function startTimer() {
+        counter = setInterval(tick, 1000);
+    }
+
+    function clearTimer() {
+        clearInterval(counter);
+        timer.empty();
+        count = 8;
+    }
+
+    function resetTimer() {
+        clearInterval(counter);
+        timer.text(8);
+        count = 8;
+        startTimer();
+    }
+
+    function pauseTimer() {
+        clearInterval(counter);
+    }
+
 
     function drawBank() {
         var select = Math.floor(Math.random() * bankSize);
@@ -33,12 +74,12 @@ $(document).ready(function() {
                 break;
             } else {
                 bankFull = true;
-
             }
 
         }
         if (bankFull) {
             finalizeGame();
+            timer.empty();
             return true;
         }
 
@@ -67,20 +108,38 @@ $(document).ready(function() {
         if (answer === guess) {
             correct++;
             console.log("Wins: " + correct);
-
             console.log("Losses: " + incorrect);
+            clearTimer();
+            // prompt.text("You got the right answer!");
+            // setTimeout(function() { prompt.empty() }, 2000);
+            resetTimer();
+        } else if (guess === "no answer") {
+            incorrect++;
+            console.log("Wins: " + correct);
+            console.log("Losses: " + incorrect);
+            clearTimer();
+            // prompt.text("You ran out of time! The answer was  " + answer)
+            // setTimeout(function() { prompt.empty() }, 2000);
+            resetTimer();
+
         } else {
             incorrect++;
             console.log("Wins: " + correct);
-
             console.log("Losses: " + incorrect);
+            clearTimer();
+            // prompt.text("Wrong answer! The right answer was " + answer)
+            // setTimeout(function() { prompt.empty() }, 2000);
+            resetTimer();
         }
     }
 
     function finalizeGame() {
         console.log("Tallying Game Score......")
+        clearInterval(counter);
+        timer.empty();
         answerBlock.children().empty();
         question.empty();
+        isRunning = false;
     }
 
     initGame();
@@ -88,16 +147,19 @@ $(document).ready(function() {
     powerButton.on('click', function() {
         if (this.innerHTML === "Start") {
             initGame();
+            timer.text(8);
+            startTimer();
             this.innerHTML = "Reset";
             while (!valid) {
-                console.log(valid);
                 valid = drawBank();
+                console.log(valid);
             }
 
         } else if (this.innerHTML === "Reset") {
             this.innerHTML = "Start";
             answerBlock.children().empty();
             question.empty();
+            clearTimer();
             resetBank();
             valid = false;
             isRunning = false;
