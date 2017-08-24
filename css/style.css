@@ -1,0 +1,82 @@
+@import url("https://fonts.googleapis.com/css?family=Monofett");
+@import url("https://fonts.googleapis.com/css?family=Annie+Use+Your+Telescope");
+body {
+  font-family: 'Annie Use Your Telescope', cursive; }
+
+.main {
+  background: black;
+  position: relative;
+  width: 75%;
+  margin: 0px auto;
+  margin-top: 75px;
+  color: white;
+  height: 600px;
+  border: 10px solid grey;
+  border-radius: 5px; }
+  .main h1 {
+    font-size: 60px;
+    text-align: center;
+    margin: 0px;
+    margin-top: 20px;
+    padding-top: 20px; }
+  .main h2 {
+    text-align: center; }
+  .main .power-container {
+    position: absolute;
+    bottom: 50px;
+    left: 50%; }
+    .main .power-container #power {
+      position: relative;
+      left: -50%;
+      right: 0;
+      margin-left: 0;
+      margin-right: 0;
+      font-size: 45px;
+      width: auto;
+      cursor: pointer;
+      height: 40px; }
+      .main .power-container #power:hover {
+        text-decoration: underline; }
+  .main #question {
+    width: 100%;
+    text-align: center;
+    margin: 0px auto;
+    font-size: 38px; }
+  .main .card-container {
+    width: 30%;
+    margin: 0px auto; }
+    .main .card-container .answer {
+      font-size: 28px;
+      padding: 5px;
+      cursor: pointer;
+      transition: all .15s ease-in-out; }
+      .main .card-container .answer:hover {
+        color: #59CD90; }
+  .main #score {
+    position: absolute;
+    bottom: 100px;
+    right: 40px;
+    width: 150px;
+    height: auto; }
+    .main #score span {
+      font-size: 20px;
+      display: block; }
+  .main .chalk {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    background-image: url("../images/chalk.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    display: block;
+    height: 75px;
+    width: 75px; }
+
+#timer {
+  margin: 20px 0px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  font-family: 'Monofett', cursive;
+  font-size: 55px; }

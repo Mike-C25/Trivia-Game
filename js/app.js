@@ -5,6 +5,8 @@ $(document).ready(function() {
     var question = $("#question");
     var powerButton = $("#power");
     var prompt = $("#prompt");
+    var correctPrompt = $("#correct");
+    var incorrectPrompt = $("#incorrect");
     var valid = false;
     var isRunning = false;
     var guess = false;
@@ -23,6 +25,9 @@ $(document).ready(function() {
         var score = 0;
         answer = "";
         isRunning = true;
+        correctPrompt.text("Correct Answers: " + correct);
+        incorrectPrompt.text("Incorrect Answers: " + incorrect);
+
     }
 
     function tick() {
@@ -109,6 +114,8 @@ $(document).ready(function() {
             correct++;
             console.log("Wins: " + correct);
             console.log("Losses: " + incorrect);
+            correctPrompt.text("Correct Answers: " + correct);
+            incorrectPrompt.text("Incorrect Answers: " + incorrect);
             clearTimer();
             // prompt.text("You got the right answer!");
             // setTimeout(function() { prompt.empty() }, 2000);
@@ -117,6 +124,8 @@ $(document).ready(function() {
             incorrect++;
             console.log("Wins: " + correct);
             console.log("Losses: " + incorrect);
+            correctPrompt.text("Correct Answers: " + correct);
+            incorrectPrompt.text("Incorrect Answers: " + incorrect);
             clearTimer();
             // prompt.text("You ran out of time! The answer was  " + answer)
             // setTimeout(function() { prompt.empty() }, 2000);
@@ -126,6 +135,8 @@ $(document).ready(function() {
             incorrect++;
             console.log("Wins: " + correct);
             console.log("Losses: " + incorrect);
+            correctPrompt.text("Correct Answers: " + correct);
+            incorrectPrompt.text("Incorrect Answers: " + incorrect);
             clearTimer();
             // prompt.text("Wrong answer! The right answer was " + answer)
             // setTimeout(function() { prompt.empty() }, 2000);
@@ -140,6 +151,7 @@ $(document).ready(function() {
         answerBlock.children().empty();
         question.empty();
         isRunning = false;
+        powerButton.text("Start New Game");
     }
 
     initGame();
@@ -164,8 +176,20 @@ $(document).ready(function() {
             valid = false;
             isRunning = false;
 
+        } else if (this.innerHTML === "Start New Game") {
+            initGame();
+            timer.text(8);
+            startTimer();
+            clearTimer();
+            resetBank();
+            this.innerHTML = "Reset";
+            valid = false;
+            while (!valid) {
+                valid = drawBank();
+                console.log(valid);
+            }
         } else {
-            console.log("???? Game is Busted");
+            console.log("You broke it somehow....");
         }
     });
 
